@@ -1,7 +1,24 @@
 package main
 
-import "fmt"
+import (
+	"context"
+
+	"invoicehub/http"
+)
 
 func main() {
-	fmt.Println("hello hot reload")
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	router := http.NewRouter()
+	params := http.ServerParams{
+		Handler: router.Handler(),
+	}
+
+	srv := http.New(&params)
+
+	err := srv.Start(ctx)
+	if err != nil {
+		panic(err)
+	}
 }

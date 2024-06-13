@@ -5,3 +5,11 @@ help: ## help information about make commands
 
 dev: ## runs the application in development mode
 	@docker compose -f dev.docker-compose.yaml up
+
+
+create-certs: ## generate self-signed certificates
+	mkcert -install
+	mkcert -cert-file ./certs/local-cert.crt \
+       -key-file ./certs/local-cert.key \
+       local.freelance-invoice-hub.com localhost 127.0.0.1 ::1
+
