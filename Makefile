@@ -13,3 +13,10 @@ create-certs: ## generate self-signed certificates
        -key-file ./certs/local-cert.key \
        local.freelance-invoice-hub.com localhost 127.0.0.1 ::1
 
+deploy: ## deploys to the remote server
+	GOOS=linux GOARCH=amd64 go build -o invoice-server cmd/main.go
+	scp invoice-server contabo-main:~/invoice-server/invoice-server.2
+	ssh contabo-main sudo systemctl stop invoice-hub
+	ssh contabo-main sudo mv invoice-server/invoice-server.2 invoice-server/invoice-server
+	ssh contabo-main sudo systemctl start invoice-hub
+

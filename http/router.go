@@ -1,9 +1,12 @@
 package http
 
 import (
+	"crypto/subtle"
 	"net/http"
+	"os"
 
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 )
 
 type Router struct {
@@ -16,6 +19,23 @@ func NewRouter() *Router {
 	}
 
 	ans.e.Debug = true
+
+	username := os.Getenv("FH_USERNAME")
+	password := os.Getenv("FH_PASSWORD")
+
+	if username == "" || password == "" {
+		panic("username or password not set")
+	}
+
+	// middlewares
+	ans.e.Use(middleware.BasicAuth(func(u, p string, c echo.Context) (bool, error) {
+		// Be careful to use constant time comparison to prevent timing attacks
+		if subtle.ConstantTimeCompare([]byte(u), []byte(username)) == 1 &&
+			subtle.ConstantTimeCompare([]byte(p), []byte(password)) == 1 {
+			return true, nil
+		}
+		return false, nil
+	}))
 
 	baseHandler := baseHandler{
 		e: ans.e,
@@ -46,6 +66,6 @@ type baseHandler struct {
 
 func (b *baseHandler) RegisterRoutes() {
 	b.e.GET("/", func(c echo.Context) error {
-		return c.String(http.StatusOK, "HELLO WORLD")
+		return c.String(http.StatusOK, "THANK YOU")
 	})
 }
