@@ -2,6 +2,7 @@ package http
 
 import (
 	"crypto/subtle"
+	"invoicehub"
 	"net/http"
 	"os"
 
@@ -13,7 +14,10 @@ type Router struct {
 	e *echo.Echo
 }
 
-func NewRouter() *Router {
+func NewRouter(
+	companies invoicehub.CompanyRepository,
+	invoices invoicehub.InvoiceService,
+) *Router {
 	ans := Router{
 		e: echo.New(),
 	}
@@ -38,7 +42,9 @@ func NewRouter() *Router {
 	}))
 
 	baseHandler := baseHandler{
-		e: ans.e,
+		e:         ans.e,
+		companies: companies,
+		invoices:  invoices,
 	}
 
 	handlers := []handler{
@@ -61,7 +67,9 @@ type handler interface {
 }
 
 type baseHandler struct {
-	e *echo.Echo
+	e         *echo.Echo
+	companies invoicehub.CompanyRepository
+	invoices  invoicehub.InvoiceService
 }
 
 func (b *baseHandler) RegisterRoutes() {

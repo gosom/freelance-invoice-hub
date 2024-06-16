@@ -10,7 +10,7 @@ func main() {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
-	router := http.NewRouter()
+	router := http.NewRouter(nil, nil)
 	params := http.ServerParams{
 		Handler: router.Handler(),
 	}
