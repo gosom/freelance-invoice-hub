@@ -13,6 +13,7 @@ func SetupDB(path string) (*gorm.DB, error) {
 
 	err = db.AutoMigrate(
 		&dbcompany{},
+		&dbinvoice{},
 	)
 	if err != nil {
 		return nil, err
