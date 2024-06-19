@@ -2,11 +2,17 @@ package invoicehub
 
 import (
 	"context"
+	"errors"
 	"time"
 
 	"github.com/shopspring/decimal"
 )
 
+var (
+	ErrInvoiceNotFound = errors.New("invoice not found")
+)
+
+//go:generate mockgen -destination=mocks/mock_invoice_repo.go -package=mocks . InvoiceRepository
 type InvoiceRepository interface {
 	Create(ctx context.Context, invoice *Invoice) (int, error)
 	Get(ctx context.Context, id int) (Invoice, error)

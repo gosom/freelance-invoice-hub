@@ -20,3 +20,5 @@ deploy: ## deploys to the remote server
 	ssh contabo-main sudo mv invoice-server/invoice-server.2 invoice-server/invoice-server
 	ssh contabo-main sudo systemctl start invoice-hub
 
+make gen: ## generates mocks for testing
+	@go generate ./...
