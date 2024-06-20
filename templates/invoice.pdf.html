@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice 1001/24</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            width: 80%;
+            max-width: 800px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .seller {
+            text-align: right;
+        }
+        .invoice-info {
+            text-align: right;
+            margin-bottom: 20px;
+        }
+        .buyer {
+            margin-top: 20px;
+        }
+        .line-items {
+            margin-bottom: 20px;
+        }
+        .line-items table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .line-items th, .line-items td {
+            border: 1px solid #000;
+            padding: 8px;
+            text-align: left;
+        }
+        .totals {
+            margin-bottom: 20px;
+        }
+        .totals table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .totals td {
+            padding: 8px;
+            text-align: right;
+        }
+        .totals .total {
+            font-weight: bold;
+        }
+        .footer {
+            border-top: 1px solid #000;
+            padding-top: 20px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <div class="buyer">
+                <h3>Bill To:</h3>
+                <p>Buyer LTD</p>
+                <p>Buyer Address</p>
+                <p>VAT: Vat-number</p>
+            </div>
+            <div class="seller">
+                <h2>Seller</h2>
+                <p>Seller Address</p>
+                <p>Seller Address2</p>
+                <p>T.I.C. No: Seller Tax Number</p>
+                <p>V.A.T. No: Seller Vat Number</p>
+            </div>
+        </div>
+
+        <div class="invoice-info">
+            <h2>Tax Invoice No.: 1001/24</h2>
+            <p>Invoice Date: 02/01/2024</p>
+        </div>
+
+        <div class="line-items">
+            <table>
+                <tr>
+                    <th>Description</th>
+                    <th>Amount (€)</th>
+                </tr>
+                <tr>
+                    <td>Service Description</td>
+                    <td>1,000.00</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="totals">
+            <table>
+                <tr>
+                    <td>Fees</td>
+                    <td>€1,000.00</td>
+                </tr>
+                <tr>
+                    <td>VAT</td>
+                    <td>€0</td>
+                </tr>
+                <tr class="total">
+                    <td>Total</td>
+                    <td>€1,000.00</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="footer">
+            <h3>Invoice Payable within 14 days to:</h3>
+            <p>Bank Name</p>
+            <p>IBAN: IBAN</p>
+            <p>BIC: Bic Number</p>
+            <p>Account Owner Name</p>
+        </div>
+    </div>
+
+</body>
+</html>
