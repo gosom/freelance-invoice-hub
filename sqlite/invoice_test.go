@@ -71,6 +71,7 @@ func Test_invoiceRepository(t *testing.T) {
 	// fetch a non-existing invoice
 	_, err = repo.Get(ctx, 999)
 	require.Error(t, err)
+	require.ErrorIs(t, err, invoicehub.ErrInvoiceNotFound)
 
 	// add one more invoice
 	invoice3 := invoicehub.Invoice{
@@ -110,4 +111,10 @@ func Test_invoiceRepository(t *testing.T) {
 	lastInvoice, err := repo.GetLastInvoiceForYear(ctx, 2024)
 	require.NoError(t, err)
 	compareInvoice(t, invoice3, lastInvoice)
+
+	// fetch the last invoice for the year 2023 (non-existing)
+
+	_, err = repo.GetLastInvoiceForYear(ctx, 2023)
+	require.Error(t, err)
+	require.ErrorIs(t, err, invoicehub.ErrInvoiceNotFound)
 }

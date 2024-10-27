@@ -2,6 +2,7 @@ package sqlite
 
 import (
 	"context"
+	"errors"
 	"invoicehub"
 	"strconv"
 	"time"
@@ -53,6 +54,10 @@ func (r *invoiceRepository) Create(ctx context.Context, invoice *invoicehub.Invo
 func (r *invoiceRepository) Get(ctx context.Context, id int) (invoicehub.Invoice, error) {
 	var dbitem dbinvoice
 	if err := r.db.WithContext(ctx).First(&dbitem, id).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return invoicehub.Invoice{}, invoicehub.ErrInvoiceNotFound
+		}
+
 		return invoicehub.Invoice{}, err
 	}
 
@@ -77,6 +82,10 @@ func (r *invoiceRepository) GetLastInvoiceForYear(ctx context.Context, year int)
 
 	var dbitem dbinvoice
 	if err := query.First(&dbitem).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return invoicehub.Invoice{}, invoicehub.ErrInvoiceNotFound
+		}
+
 		return invoicehub.Invoice{}, err
 	}
 
